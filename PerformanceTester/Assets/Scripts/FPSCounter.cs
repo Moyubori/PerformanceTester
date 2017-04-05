@@ -95,4 +95,8 @@ public class FPSCounter : MonoBehaviour {
 		}
 	}
 
+	public float GetFPS(){
+		return calculatedFPS;
+	}
+
 }

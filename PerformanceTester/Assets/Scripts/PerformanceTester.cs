@@ -6,12 +6,11 @@ public class PerformanceTester : MonoBehaviour {
 
 	public static PerformanceTester instance = null;
 
+	public BenchmarkData dataStorage;
 
 	ObserverPool observerPool;
 	FPSCounter fpsCounter;
 	List<ExecutionObserver> deployedObservers = new List<ExecutionObserver> ();
-
-
 
 	void Awake(){
 		// make sure that there's only one instance
@@ -31,7 +30,13 @@ public class PerformanceTester : MonoBehaviour {
 		if (fpsCounter == null) {
 			Debug.LogError ("Can't find FPSCounter.");
 		}
+		dataStorage.StartBenchmark ();
 		StartCoroutine (RunTester());
+	}
+
+	void OnApplicationQuit(){
+		Debug.Log ("quit");
+		dataStorage.SaveDataToFile ();
 	}
 
 	IEnumerator RunTester(){
@@ -40,6 +45,8 @@ public class PerformanceTester : MonoBehaviour {
 			for (int i = 0; i < deployedObservers.Count; i++) {
 				SetMeasurementStatus (deployedObservers [i]);
 			}
+
+			dataStorage.LogFPS (Time.realtimeSinceStartup, fpsCounter.GetFPS ());
 			yield return new WaitForSecondsRealtime (0.01f);
 		}
 	}
@@ -50,7 +57,8 @@ public class PerformanceTester : MonoBehaviour {
 			observer.gameObject.SetActive (false);
 			deployedObservers.Remove (observer);
 		}
-		Debug.Log (observer.GetProcessName() + " progress:" + (observer.GetProgress() * 100) + "%");
+		dataStorage.LogProcess (observer.GetProcessName (), Time.realtimeSinceStartup, observer.GetExecutionTime (), observer.GetProgress ());
+		//Debug.Log (observer.GetProcessName() + " progress:" + (observer.GetProgress() * 100) + "%");
 	}
 
 	public static ExecutionObserver GetExecutionObserver(){

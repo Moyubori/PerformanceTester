@@ -50,12 +50,7 @@ public class ExecutionObserver : MonoBehaviour {
 	}
 
 	public float GetExecutionTime(){
-		if (running) {
-			Debug.LogError ("Execution time read before process completion.");
-			return -1;
-		} else {
-			return (float)stopwatch.ElapsedMilliseconds / 1000;
-		}
+		return (float)stopwatch.ElapsedMilliseconds / 1000;
 	}
 
 }

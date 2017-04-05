@@ -21,7 +21,6 @@ public class Spawner : MonoBehaviour {
 
 	IEnumerator SpawnStuff(){
 		ExecutionObserver observer = PerformanceTester.GetExecutionObserver ();
-		Debug.Log (spawningProcessName + observer);
 		observer.Run (spawningProcessName);
 		for (int i = 0; i < cubesToSpawn; i++) {
 			GameObject spawnedCube = Instantiate (cubePrefab);
