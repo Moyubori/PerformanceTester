@@ -40,11 +40,9 @@ public class PerformanceTester : MonoBehaviour {
 
 	IEnumerator RunTester(){
 		while (true) {
-			// can't use foreach because some elements might get removed form list during the loop
 			for (int i = 0; i < deployedObservers.Count; i++) {
 				SetMeasurementStatus (deployedObservers [i]);
 			}
-				
 			yield return new WaitForSecondsRealtime (0.01f);
 		}
 	}

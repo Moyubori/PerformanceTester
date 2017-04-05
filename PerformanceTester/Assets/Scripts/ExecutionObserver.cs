@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class ExecutionObserver : MonoBehaviour {
@@ -10,7 +11,7 @@ public class ExecutionObserver : MonoBehaviour {
 	private float progress;
 	private string processName;
 
-	private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+	private Stopwatch stopwatch = new Stopwatch();
 
 	void Awake(){
 		performanceTester = PerformanceTester.instance;
@@ -21,7 +22,7 @@ public class ExecutionObserver : MonoBehaviour {
 		if (performanceTester.ValidateProcessName (processName)) {
 			this.processName = processName;
 		} else {
-			Debug.LogError ("Process name already taken. Aborting...");
+			Debug.LogError ("Process name already taken.");
 		}
 		this.running = true;
 		stopwatch.Reset ();

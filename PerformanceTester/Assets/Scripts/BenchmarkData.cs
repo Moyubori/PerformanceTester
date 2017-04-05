@@ -8,11 +8,11 @@ public class BenchmarkData : ScriptableObject {
 	[System.Serializable]
 	struct FPSDataStruct{
 		public FPSDataStruct(float systemTime, float fps){
-			this.systemTime = systemTime;
+			this.applicationTime = systemTime;
 			this.fps = fps;
 		}
 
-		public float systemTime { get; private set; }
+		public float applicationTime { get; private set; }
 		public float fps { get; private set; }
 	}
 
@@ -20,13 +20,13 @@ public class BenchmarkData : ScriptableObject {
 	struct ProcessDataStruct{
 		public ProcessDataStruct(string processName, float systemTime, float processTime, float progress){
 			this.processName = processName;
-			this.systemTime = systemTime;
+			this.applicationTime = systemTime;
 			this.processTime = processTime;
 			this.progress = progress;
 		}
 
 		public string processName { get; private set; }
-		public float systemTime { get; private set; }
+		public float applicationTime { get; private set; }
 		public float processTime { get; private set; }
 		public float progress { get; private set; }
 	}
@@ -58,13 +58,12 @@ public class BenchmarkData : ScriptableObject {
 	public void SaveDataToFile(){
 		System.IO.StreamWriter fpsLogWriter = new System.IO.StreamWriter (logsPath + "/FPSLog" + currentBenchmark.ToString () + ".txt", true);
 		foreach (FPSDataStruct fpsLog in fpsData) {
-			fpsLogWriter.WriteLine (fpsLog.systemTime + ";" + fpsLog.fps);
+			fpsLogWriter.WriteLine (fpsLog.applicationTime + ";" + fpsLog.fps);
 		}
 		fpsLogWriter.Close ();
 		System.IO.StreamWriter processLogWriter = new System.IO.StreamWriter (logsPath + "/ProcessLog" + currentBenchmark.ToString () + ".txt", true);
 		foreach (ProcessDataStruct processLog in processData) {
-			Debug.Log (processLog);
-			processLogWriter.WriteLine (processLog.systemTime + ";" + processLog.processName + ";" + processLog.processTime + ";" + processLog.progress);
+			processLogWriter.WriteLine (processLog.applicationTime + ";" + processLog.processName + ";" + processLog.processTime + ";" + processLog.progress);
 		}
 		processLogWriter.Close ();
 	}
