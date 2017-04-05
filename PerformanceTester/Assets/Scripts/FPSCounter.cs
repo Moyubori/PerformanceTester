@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class FPSCounter : MonoBehaviour {
 
+	private PerformanceTester performanceTester;
+
 	public bool showFPS = true;
 	public bool showMinFPS = true;
 	public bool showMaxFPS = true;
@@ -29,6 +31,12 @@ public class FPSCounter : MonoBehaviour {
 	void Awake(){
 		framesSinceLastCheck = 0;
 		calculatedFPS = 0;
+		performanceTester = PerformanceTester.instance;
+	}
+
+	void Start(){
+		performanceTester = PerformanceTester.instance;
+
 	}
 
 	void Update(){
@@ -53,7 +61,7 @@ public class FPSCounter : MonoBehaviour {
 			if (calculatedFPS > maxFPS || maxFPS == -1) {
 				maxFPS = calculatedFPS;
 			}
-
+			performanceTester.dataStorage.LogFPS (Time.time, calculatedFPS);
 			yield return new WaitForSecondsRealtime (updateInterval);
 		}
 		calculateFPSCoroutineRunning = false;
@@ -95,7 +103,7 @@ public class FPSCounter : MonoBehaviour {
 		}
 	}
 
-	public float GetFPS(){
+	public float GetCurrentFPS(){
 		return calculatedFPS;
 	}
 

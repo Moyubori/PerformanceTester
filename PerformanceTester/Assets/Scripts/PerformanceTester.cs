@@ -35,7 +35,6 @@ public class PerformanceTester : MonoBehaviour {
 	}
 
 	void OnApplicationQuit(){
-		Debug.Log ("quit");
 		dataStorage.SaveDataToFile ();
 	}
 
@@ -45,8 +44,7 @@ public class PerformanceTester : MonoBehaviour {
 			for (int i = 0; i < deployedObservers.Count; i++) {
 				SetMeasurementStatus (deployedObservers [i]);
 			}
-
-			dataStorage.LogFPS (Time.realtimeSinceStartup, fpsCounter.GetFPS ());
+				
 			yield return new WaitForSecondsRealtime (0.01f);
 		}
 	}
