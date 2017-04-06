@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class ExecutionObserver : MonoBehaviour {
@@ -11,7 +10,7 @@ public class ExecutionObserver : MonoBehaviour {
 	private float progress;
 	private string processName;
 
-	private Stopwatch stopwatch = new Stopwatch();
+	private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
 	void Awake(){
 		performanceTester = PerformanceTester.instance;
